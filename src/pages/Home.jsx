@@ -9,19 +9,26 @@ class Home extends Component {
       categories: [],
       searchTerm: '',
       searchedItems: [],
+      categoryID: '',
     };
     this.fetchCategories = this.fetchCategories.bind(this);
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
+    this.onCategoryClick = this.onCategoryClick.bind(this);
   }
 
   componentDidMount() {
     this.fetchCategories();
   }
 
+  onCategoryClick({ target }) {
+    const { value } = target;
+    this.setState({ categoryID: value }, this.onSubmitHandler);
+  }
+
   async onSubmitHandler() {
-    const { searchTerm } = this.state;
-    const searchedItems = await getProductsFromCategoryAndQuery('', searchTerm);
+    const { searchTerm, categoryID } = this.state;
+    const searchedItems = await getProductsFromCategoryAndQuery(categoryID, searchTerm);
     const { results } = searchedItems;
     this.setState({
       searchedItems: [...results],
@@ -47,8 +54,15 @@ class Home extends Component {
         <div>
           <ul>
             {categories.map(({ id, name }) => (
-              <li key={ id } data-testid="category">
-                { name }
+              <li key={ id }>
+                <button
+                  data-testid="category"
+                  type="button"
+                  value={ id }
+                  onClick={ this.onCategoryClick }
+                >
+                  { name }
+                </button>
               </li>
             ))}
           </ul>
