@@ -68,7 +68,11 @@ class Home extends Component {
                 data-testid="query-input"
               />
             </label>
-            <button data-testid="query-button" type="button" onClick={ this.onSubmitHandler }>
+            <button
+              data-testid="query-button"
+              type="button"
+              onClick={ this.onSubmitHandler }
+            >
               Buscar
             </button>
             <Link data-testid="shopping-cart-button" to="/cart">
