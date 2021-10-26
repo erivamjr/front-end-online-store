@@ -16,17 +16,22 @@ class DetailProduct extends Component {
   }
 
   componentDidMount() {
-    console.log('Cheguei');
     this.fetchAndSaveProduct();
   }
 
-  // http://localhost:3000/product/MLB2027933292/MLB263795/Molho De Tomate Tradicional Quero Em Sachê 340 G
-
   async fetchAndSaveProduct() {
-    const { match: { params: { productId, categoryId, productName } } } = this.props;
-    const products = await getProductsFromCategoryAndQuery(categoryId, productName);
-    const { title, price, thumbnail, attributes } = products
-      .results.find((product) => product.id === productId);
+    const {
+      match: {
+        params: { productId, categoryId, productName },
+      },
+    } = this.props;
+    const products = await getProductsFromCategoryAndQuery(
+      categoryId,
+      productName,
+    );
+
+    const { title, price, thumbnail, attributes } = products.results
+      .find((product) => product.id === productId);
 
     this.setState({ title, price, thumbnail, attributes });
   }
@@ -35,20 +40,27 @@ class DetailProduct extends Component {
     const { title, price, thumbnail, attributes } = this.state;
     return (
       <div>
-        <h2 data-testid="product-detail-name">{ title }</h2>
-        <p>{ price }</p>
+        <h2 data-testid="product-detail-name">{title}</h2>
+        <p>{price}</p>
         <img src={ thumbnail } alt={ title } />
-        { attributes.map(({ name, value_name: valueName, id }) => (
+        {attributes.map(({ name, value_name: valueName, id }) => (
           <div key={ id }>
-            <h3>{ `${name}: ${valueName}` }</h3>
+            <h3>{`${name}: ${valueName}`}</h3>
           </div>
-        )) }
-      </div>);
+        ))}
+      </div>
+    );
   }
 }
 
 DetailProduct.propTypes = {
-  match: PropTypes.shape({ params: { productId, categoryId, productName } }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      productId: PropTypes.number,
+      categoryId: PropTypes.number,
+      productName: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default DetailProduct;

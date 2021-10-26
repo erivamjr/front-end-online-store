@@ -84,13 +84,20 @@ class Home extends Component {
           <div>
             {
               (searchedItems.length > 0)
-                ? searchedItems.map(({ price, thumbnail, title, id }) => (
-                  <div data-testid="product" key={ id }>
-                    <h3>{ title }</h3>
-                    <img src={ thumbnail } alt={ title } />
-                    <p>{ price }</p>
-                  </div>
-                )) : <p>Nenhum produto foi encontrado</p>
+                ? searchedItems
+                  .map(({ price, thumbnail, title, id, category_id: categoryId }) => (
+                    <Link
+                      key={ id }
+                      to={ `product/${id}/${categoryId}/${title}` }
+                      data-testid="product-detail-link"
+                    >
+                      <div data-testid="product">
+                        <h3>{ title }</h3>
+                        <img src={ thumbnail } alt={ title } />
+                        <p>{ price }</p>
+                      </div>
+                    </Link>
+                  )) : <p>Nenhum produto foi encontrado</p>
             }
           </div>
         </div>
