@@ -56,8 +56,8 @@ class DetailProduct extends Component {
 DetailProduct.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      productId: PropTypes.number,
-      categoryId: PropTypes.number,
+      productId: PropTypes.string,
+      categoryId: PropTypes.string,
       productName: PropTypes.string,
     }),
   }).isRequired,
