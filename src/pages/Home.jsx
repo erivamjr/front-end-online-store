@@ -99,10 +99,10 @@ class Home extends Component {
             {
               (searchedItems.length > 0)
                 ? searchedItems
-                  .map(({ price, thumbnail, title, id, category_id: categoryId }) => (
+                  .map(({ price, thumbnail, title, id }) => (
                     <Link
                       key={ id }
-                      to={ `product/${id}/${categoryId}/${title}` }
+                      to={ `product/${id}` }
                       data-testid="product-detail-link"
                     >
                       <div data-testid="product">
