@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getProductsFromCategoryAndQuery } from '../services/api';
 
 class DetailProduct extends Component {
   constructor() {
@@ -13,25 +12,26 @@ class DetailProduct extends Component {
     };
 
     this.fetchAndSaveProduct = this.fetchAndSaveProduct.bind(this);
+    this.fetchProductById = this.fetchProductById.bind(this);
   }
 
   componentDidMount() {
     this.fetchAndSaveProduct();
   }
 
+  async fetchProductById(id) {
+    const fetchApi = await fetch(`https://api.mercadolibre.com/items/${id}`);
+    const product = await fetchApi.json();
+    return product;
+  }
+
   async fetchAndSaveProduct() {
     const {
-      match: {
-        params: { productId, categoryId, productName },
-      },
+      match: { params: { productId } },
     } = this.props;
-    const products = await getProductsFromCategoryAndQuery(
-      categoryId,
-      productName,
-    );
 
-    const { title, price, thumbnail, attributes } = products.results
-      .find((product) => product.id === productId);
+    const product = await this.fetchProductById(productId);
+    const { title, price, thumbnail, attributes } = product;
 
     this.setState({ title, price, thumbnail, attributes });
   }

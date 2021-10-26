@@ -13,7 +13,7 @@ class App extends Component {
           <Route exact path="/" component={ Home } />
           <Route path="/cart" component={ Cart } />
           <Route
-            path="/product/:productId?/:categoryId?/:productName?"
+            path="/product/:productId"
             component={ DetailProduct }
           />
         </Switch>
