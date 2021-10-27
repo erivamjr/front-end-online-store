@@ -35,7 +35,7 @@ class Cart extends Component {
                 <ProductCard
                   product={ product }
                 />
-                <p data-testid="shopping-cart-product-quantity">0</p>
+                <p data-testid="shopping-cart-product-quantity">1</p>
               </div>
             ))
             : (

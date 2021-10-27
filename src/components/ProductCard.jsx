@@ -9,10 +9,7 @@ class ProductCard extends Component {
     this.fetchProductAndSave = this.fetchProductAndSave.bind(this);
   }
 
-  async fetchProductAndSave({ target }) {
-    const { value } = target;
-    const fetchApi = await fetch(`https://api.mercadolibre.com/items/${value}`);
-    const product = await fetchApi.json();
+  async fetchProductAndSave(product) {
     addProduct(product);
   }
 
@@ -34,8 +31,8 @@ class ProductCard extends Component {
         <button
           data-testid="product-add-to-cart"
           type="button"
-          onClick={ this.fetchProductAndSave }
-          value={ id }
+          onClick={ () => this.fetchProductAndSave({ price, thumbnail, title, id }) }
+          // value={ id }
         >
           Add Cart
         </button>
