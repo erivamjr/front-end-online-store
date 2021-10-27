@@ -18,7 +18,6 @@ class ProductCard extends Component {
     return (
       <div>
         <Link
-          key={ id }
           to={ `product/${id}` }
           data-testid="product-detail-link"
         >
@@ -31,7 +30,8 @@ class ProductCard extends Component {
         <button
           data-testid="product-add-to-cart"
           type="button"
-          onClick={ () => this.fetchProductAndSave({ price, thumbnail, title, id }) }
+          onClick={ () => this
+            .fetchProductAndSave({ price, thumbnail, title, id }) }
           // value={ id }
         >
           Add Cart

@@ -30,7 +30,8 @@ class Cart extends Component {
           products.length
             ? products.map((product) => (
               <div
-                key={ product.id }
+                // key={ product.id }
+                key={ `cart${product.id}` }
               >
                 <ProductCard
                   product={ product }
