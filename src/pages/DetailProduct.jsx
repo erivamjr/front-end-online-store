@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { addProduct } from '../libs/localStorageCart';
 
 class DetailProduct extends Component {
   constructor() {
@@ -13,6 +15,7 @@ class DetailProduct extends Component {
 
     this.fetchAndSaveProduct = this.fetchAndSaveProduct.bind(this);
     this.fetchProductById = this.fetchProductById.bind(this);
+    this.fetchProductAndSave = this.fetchProductAndSave.bind(this);
   }
 
   componentDidMount() {
@@ -36,18 +39,38 @@ class DetailProduct extends Component {
     this.setState({ title, price, thumbnail, attributes });
   }
 
+  async fetchProductAndSave(product) {
+    addProduct(product);
+  }
+
   render() {
-    const { title, price, thumbnail, attributes } = this.state;
+    const { title, price, thumbnail, attributes, id } = this.state;
     return (
       <div>
         <h2 data-testid="product-detail-name">{title}</h2>
         <p>{price}</p>
         <img src={ thumbnail } alt={ title } />
-        {attributes.map(({ name, value_name: valueName, id }) => (
-          <div key={ id }>
+        {attributes.map(({ name, value_name: valueName, id: atributeID }) => (
+          <div key={ atributeID }>
             <h3>{`${name}: ${valueName}`}</h3>
           </div>
         ))}
+        <button
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onClick={ () => this
+            .fetchProductAndSave({ price, thumbnail, title, id }) }
+        >
+          Adicionar ao Carrinho
+        </button>
+        <Link
+          data-testid="shopping-cart-button"
+          to="/cart"
+        >
+          <button type="button">
+            Carrinho de Compras
+          </button>
+        </Link>
       </div>
     );
   }
