@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import ProductCard from '../components/ProductCard';
 
 class Home extends Component {
   constructor() {
@@ -99,18 +100,11 @@ class Home extends Component {
             {
               (searchedItems.length > 0)
                 ? searchedItems
-                  .map(({ price, thumbnail, title, id }) => (
-                    <Link
-                      key={ id }
-                      to={ `product/${id}` }
-                      data-testid="product-detail-link"
-                    >
-                      <div data-testid="product">
-                        <h3>{ title }</h3>
-                        <img src={ thumbnail } alt={ title } />
-                        <p>{ price }</p>
-                      </div>
-                    </Link>
+                  .map((item) => (
+                    <ProductCard
+                      key={ item.id }
+                      product={ item }
+                    />
                   )) : <p>Nenhum produto foi encontrado</p>
             }
           </div>
