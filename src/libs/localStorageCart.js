@@ -4,7 +4,7 @@ if (!JSON.parse(localStorage.getItem(PRODUCTS_CART_KEY))) {
   localStorage.setItem(PRODUCTS_CART_KEY, JSON.stringify([]));
 }
 
-const readProductsCart = () => JSON.parse(localStorage.getItem(PRODUCTS_CART_KEY));
+const readProductsCart = () => JSON.parse(localStorage.getItem(PRODUCTS_CART_KEY)) || [];
 
 const saveProductsCart = (productsCart) => localStorage
   .setItem(PRODUCTS_CART_KEY, JSON.stringify(productsCart));
@@ -15,8 +15,27 @@ export const getProductsCart = () => {
 };
 
 export const addProduct = (product) => {
+  console.log(product.id);
   if (product) {
     const productsCart = readProductsCart();
-    saveProductsCart([...productsCart, product]);
+    if (!productsCart.some((actualProduct) => actualProduct.id === product.id)) {
+      product.quantity = 1;
+      saveProductsCart([...productsCart, product]);
+    } else {
+      const savedProduct = productsCart
+        .find((actualProduct) => actualProduct.id === product.id);
+      savedProduct.quantity += 1;
+      saveProductsCart([...productsCart]);
+    }
+  }
+};
+
+export const changeQuantity = (product, counter) => {
+  const productsCart = readProductsCart();
+  const savedProduct = productsCart
+    .find((actualProduct) => actualProduct.id === product.id);
+  if (savedProduct.quantity >= 1) {
+    savedProduct.quantity += counter;
+    saveProductsCart([...productsCart]);
   }
 };
