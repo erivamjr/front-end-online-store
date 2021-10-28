@@ -4,6 +4,7 @@ import './App.css';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import DetailProduct from './pages/DetailProduct';
+import FinishBuy from './pages/FinishBuy';
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
             path="/product/:productId"
             component={ DetailProduct }
           />
+          <Route path="/finishbuy" component={ FinishBuy } />
         </Switch>
       </BrowserRouter>
     );
