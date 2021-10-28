@@ -32,7 +32,6 @@ class ProductCard extends Component {
           type="button"
           onClick={ () => this
             .fetchProductAndSave({ price, thumbnail, title, id }) }
-          // value={ id }
         >
           Add Cart
         </button>

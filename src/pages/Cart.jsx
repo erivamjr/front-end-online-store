@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ProductCard from '../components/ProductCard';
-import { getProductsCart } from '../libs/localStorageCart';
+import { getProductsCart, changeQuantity } from '../libs/localStorageCart';
 
 class Cart extends Component {
   constructor() {
@@ -8,14 +8,14 @@ class Cart extends Component {
     this.state = {
       products: [],
     };
-    this.teste = this.teste.bind(this);
+    this.retrieveProducts = this.retrieveProducts.bind(this);
   }
 
   componentDidMount() {
-    this.teste();
+    this.retrieveProducts();
   }
 
-  teste() {
+  retrieveProducts() {
     const products = getProductsCart();
     this.setState({
       products,
@@ -24,19 +24,43 @@ class Cart extends Component {
 
   render() {
     const { products } = this.state;
+    const DEACREASE = -1;
+    const INCREASE = +1;
     return (
       <div>
         {
           products.length
             ? products.map((product) => (
               <div
-                // key={ product.id }
                 key={ `cart${product.id}` }
               >
                 <ProductCard
                   product={ product }
                 />
-                <p data-testid="shopping-cart-product-quantity">1</p>
+                <div className="product-quantity">
+                  <button
+                    type="button"
+                    data-testid="product-decrease-quantity"
+                    onClick={ () => {
+                      changeQuantity(product, DEACREASE);
+                      this.retrieveProducts();
+                    } }
+                  >
+                    -
+                  </button>
+                  <p data-testid="shopping-cart-product-quantity">{product.quantity}</p>
+                  <button
+                    type="button"
+                    data-testid="product-increase-quantity"
+                    onClick={ () => {
+                      changeQuantity(product, INCREASE);
+                      this.retrieveProducts();
+                    } }
+                  >
+                    +
+                  </button>
+                </div>
+                <button type="button">Excluir</button>
               </div>
             ))
             : (

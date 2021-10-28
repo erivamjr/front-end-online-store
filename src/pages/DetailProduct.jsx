@@ -11,6 +11,7 @@ class DetailProduct extends Component {
       thumbnail: '',
       price: '',
       attributes: [],
+      id: '',
     };
 
     this.fetchAndSaveProduct = this.fetchAndSaveProduct.bind(this);
@@ -34,9 +35,9 @@ class DetailProduct extends Component {
     } = this.props;
 
     const product = await this.fetchProductById(productId);
-    const { title, price, thumbnail, attributes } = product;
+    const { title, price, thumbnail, attributes, id } = product;
 
-    this.setState({ title, price, thumbnail, attributes });
+    this.setState({ title, price, thumbnail, attributes, id });
   }
 
   async fetchProductAndSave(product) {
