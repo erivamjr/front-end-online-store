@@ -45,13 +45,23 @@ class FinishBuy extends Component {
             <input name="email" id="email" type="email" data-testid="checkout-email" />
           </label>
           <label htmlFor="cellphone">
-            <input name="cellphone" id="cellphone" type="text" data-testid="checkout-phone" />
+            <input
+              name="cellphone"
+              id="cellphone"
+              type="text"
+              data-testid="checkout-phone"
+            />
           </label>
           <label htmlFor="cep">
             <input name="cep" id="cep" type="text" data-testid="checkout-cep" />
           </label>
           <label htmlFor="address">
-            <input name="address" id="address" type="text" data-testid="checkout-address" />
+            <input
+              name="address"
+              id="address"
+              type="text"
+              data-testid="checkout-address"
+            />
           </label>
           <label htmlFor="complement">
             <input name="complement" id="complement" type="text" />
