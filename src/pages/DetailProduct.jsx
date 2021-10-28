@@ -71,6 +71,76 @@ class DetailProduct extends Component {
             Carrinho de Compras
           </button>
         </Link>
+        <form onSubmit={ this.function } className="form-avaliation">
+          <label htmlFor="email">
+            <input type="email" id="email" />
+          </label>
+          <span className="star-cb-group">
+            <label htmlFor="rating-0">
+              0
+              <input
+                type="radio"
+                id="rating-0"
+                name="rating"
+                value="0"
+              />
+            </label>
+            <label htmlFor="rating-1">
+              1
+              <input
+                type="radio"
+                id="rating-1"
+                name="rating"
+                value="1"
+              />
+            </label>
+            <label htmlFor="rating-2">
+              2
+              <input
+                type="radio"
+                id="rating-2"
+                name="rating"
+                value="2"
+              />
+            </label>
+            <label htmlFor="rating-3">
+              3
+              <input
+                type="radio"
+                id="rating-3"
+                name="rating"
+                value="3"
+              />
+            </label>
+            <label htmlFor="rating-4">
+              4
+              <input
+                type="radio"
+                id="rating-4"
+                name="rating"
+                value="4"
+              />
+            </label>
+            <label htmlFor="rating-5">
+              5
+              <input
+                type="radio"
+                id="rating-5"
+                name="rating"
+                value="5"
+                className="star-cb-clear"
+              />
+            </label>
+          </span>
+          <label htmlFor="product-detail-evaluation">
+            <textarea
+              className="form-textarea"
+              type="textarea"
+              data-testid="product-detail-evaluation"
+            />
+          </label>
+          <button type="submit" className="submit-button">Avaliar</button>
+        </form>
       </div>
     );
   }
