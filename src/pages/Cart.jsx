@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import { getProductsCart, changeQuantity } from '../libs/localStorageCart';
 
@@ -71,6 +72,9 @@ class Cart extends Component {
               </span>
             )
         }
+        <Link to="/finishbuy">
+          <button type="button" data-testid="checkout-products">Checkout</button>
+        </Link>
       </div>
     );
   }
