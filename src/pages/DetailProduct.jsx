@@ -12,6 +12,7 @@ class DetailProduct extends Component {
       price: '',
       attributes: [],
       id: '',
+      freeShipping: false,
     };
 
     this.fetchAndSaveProduct = this.fetchAndSaveProduct.bind(this);
@@ -35,9 +36,16 @@ class DetailProduct extends Component {
     } = this.props;
 
     const product = await this.fetchProductById(productId);
-    const { title, price, thumbnail, attributes, id } = product;
+    const {
+      title,
+      price,
+      thumbnail,
+      attributes,
+      id,
+      shipping: { free_shipping: freeShipping },
+    } = product;
 
-    this.setState({ title, price, thumbnail, attributes, id });
+    this.setState({ title, price, thumbnail, attributes, id, freeShipping });
   }
 
   async fetchProductAndSave(product) {
@@ -45,7 +53,7 @@ class DetailProduct extends Component {
   }
 
   render() {
-    const { title, price, thumbnail, attributes, id } = this.state;
+    const { title, price, thumbnail, attributes, id, freeShipping } = this.state;
     return (
       <div>
         <h2 data-testid="product-detail-name">{title}</h2>
@@ -56,6 +64,10 @@ class DetailProduct extends Component {
             <h3>{`${name}: ${valueName}`}</h3>
           </div>
         ))}
+        {
+          (freeShipping)
+          && <p data-testid="free-shipping">Frete Grátis</p>
+        }
         <button
           type="button"
           data-testid="product-detail-add-to-cart"
