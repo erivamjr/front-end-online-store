@@ -34,7 +34,6 @@ class Home extends Component {
     this.setState({
       searchedItems: [...results],
     });
-    console.log(searchedItems);
   }
 
   async fetchCategories() {
