@@ -7,12 +7,12 @@ class DetailProduct extends Component {
   constructor() {
     super();
     this.state = {
-      title: '',
-      thumbnail: '',
-      price: '',
       attributes: [],
-      id: '',
       freeShipping: false,
+      id: '',
+      price: '',
+      thumbnail: '',
+      title: '',
     };
 
     this.fetchAndSaveProduct = this.fetchAndSaveProduct.bind(this);
@@ -37,15 +37,15 @@ class DetailProduct extends Component {
 
     const product = await this.fetchProductById(productId);
     const {
-      title,
+      attributes,
+      shipping: { free_shipping: freeShipping },
+      id,
       price,
       thumbnail,
-      attributes,
-      id,
-      shipping: { free_shipping: freeShipping },
+      title,
     } = product;
 
-    this.setState({ title, price, thumbnail, attributes, id, freeShipping });
+    this.setState({ attributes, freeShipping, id, price, thumbnail, title });
   }
 
   async fetchProductAndSave(product) {
@@ -53,7 +53,7 @@ class DetailProduct extends Component {
   }
 
   render() {
-    const { title, price, thumbnail, attributes, id, freeShipping } = this.state;
+    const { attributes, freeShipping, id, price, thumbnail, title } = this.state;
     return (
       <div>
         <h2 data-testid="product-detail-name">{title}</h2>
