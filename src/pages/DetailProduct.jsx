@@ -14,10 +14,8 @@ class DetailProduct extends Component {
       thumbnail: '',
       title: '',
     };
-
     this.fetchAndSaveProduct = this.fetchAndSaveProduct.bind(this);
     this.fetchProductById = this.fetchProductById.bind(this);
-    this.fetchProductAndSave = this.fetchProductAndSave.bind(this);
   }
 
   componentDidMount() {
@@ -48,10 +46,6 @@ class DetailProduct extends Component {
     this.setState({ attributes, freeShipping, id, price, thumbnail, title });
   }
 
-  async fetchProductAndSave(product) {
-    addProduct(product);
-  }
-
   render() {
     const { attributes, freeShipping, id, price, thumbnail, title } = this.state;
     return (
@@ -71,8 +65,7 @@ class DetailProduct extends Component {
         <button
           type="button"
           data-testid="product-detail-add-to-cart"
-          onClick={ () => this
-            .fetchProductAndSave({ price, thumbnail, title, id }) }
+          onClick={ () => addProduct({ price, thumbnail, title, id }) }
         >
           Adicionar ao Carrinho
         </button>
