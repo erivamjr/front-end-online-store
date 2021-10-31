@@ -17,10 +17,12 @@ export const getProductsCart = () => {
 export const addProduct = (product) => {
   if (product) {
     const productsCart = readProductsCart();
-    if (!productsCart.some((actualProduct) => actualProduct.id === product.id)) {
+    if (!productsCart.some((actualProduct) => actualProduct.id === product.id
+      && product.availableQuantity >= 1)) {
       product.quantity = 1;
+      product.maxQuantity = product.availableQuantity;
       saveProductsCart([...productsCart, product]);
-    } else {
+    } else if (product.availableQuantity >= 1) {
       const savedProduct = productsCart
         .find((actualProduct) => actualProduct.id === product.id);
       savedProduct.quantity += 1;
@@ -33,10 +35,23 @@ export const changeQuantity = (productId, counter) => {
   const productsCart = readProductsCart();
   const savedProduct = productsCart
     .find((actualProduct) => actualProduct.id === productId);
-  if (savedProduct.quantity >= 1) {
-    savedProduct.quantity += counter;
-    saveProductsCart([...productsCart]);
+  if (savedProduct.quantity >= 1
+      && savedProduct.availableQuantity >= 1
+      && savedProduct.quantity <= savedProduct.availableQuantity) {
+    if (counter === +1) {
+      savedProduct.availableQuantity -= 1;
+      savedProduct.quantity += counter;
+      saveProductsCart([...productsCart]);
+    } else {
+      savedProduct.availableQuantity += 1;
+      savedProduct.quantity += counter;
+      saveProductsCart([...productsCart]);
+    }
   }
+  // else {
+  //   savedProduct.quantity = 1;
+  //   saveProductsCart([...productsCart]);
+  // }
 };
 
 export const getProductsQuantity = () => {

@@ -107,6 +107,7 @@ class Home extends Component {
                       thumbnail,
                       title,
                       shipping: { free_shipping: freeShipping },
+                      available_quantity: availableQuantity,
                     },
                   ) => (
                     <div
@@ -139,6 +140,12 @@ class Home extends Component {
                             <span>{ price }</span>
                           </div>
 
+                          <div>
+                            <span>
+                              {`Unidades disponíveis: ${availableQuantity}`}
+                            </span>
+                          </div>
+
                           <h4 data-testid="shopping-cart-product-name">
                             { title }
                           </h4>
@@ -149,7 +156,14 @@ class Home extends Component {
                         data-testid="product-add-to-cart"
                         type="button"
                         onClick={ () => {
-                          addProduct({ freeShipping, id, price, thumbnail, title });
+                          addProduct({
+                            freeShipping,
+                            id,
+                            price,
+                            thumbnail,
+                            title,
+                            availableQuantity,
+                          });
                           retrieveQuantity();
                         } }
                       >
