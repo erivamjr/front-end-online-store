@@ -4,6 +4,8 @@
   padding: 0;
 }
 
+/* Home */
+
 /* .img-for-test {
   display: none;
 } */
@@ -16,6 +18,7 @@
 .categories-list {
   border: 1px solid red;
   display: flex;
+  flex-basis: 20%;
   flex-direction: column;
   margin: 20px;
   padding: 20px;
@@ -23,6 +26,7 @@
 
 .search-container {
   border: 1px solid red;
+  flex-basis: 80%;
   margin: 20px;
   padding: 20px;
 }
