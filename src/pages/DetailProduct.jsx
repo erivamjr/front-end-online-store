@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { addProduct } from '../libs/localStorageCart';
+import LinkToCart from '../components/LinkToCart';
 
 class DetailProduct extends Component {
   constructor() {
@@ -48,6 +48,8 @@ class DetailProduct extends Component {
 
   render() {
     const { attributes, freeShipping, id, price, thumbnail, title } = this.state;
+    const { retrieveQuantity, productsQuantity } = this.props;
+
     return (
       <div>
         <h2 data-testid="product-detail-name">{title}</h2>
@@ -65,18 +67,14 @@ class DetailProduct extends Component {
         <button
           type="button"
           data-testid="product-detail-add-to-cart"
-          onClick={ () => addProduct({ price, thumbnail, title, id }) }
+          onClick={ () => {
+            addProduct({ price, thumbnail, title, id });
+            retrieveQuantity();
+          } }
         >
           Adicionar ao Carrinho
         </button>
-        <Link
-          data-testid="shopping-cart-button"
-          to="/cart"
-        >
-          <button type="button">
-            Carrinho de Compras
-          </button>
-        </Link>
+        <LinkToCart productsQuantity={ productsQuantity } />
         <form onSubmit={ this.function } className="form-avaliation">
           <label htmlFor="email">
             <input type="email" id="email" />
@@ -160,6 +158,8 @@ DetailProduct.propTypes = {
       productName: PropTypes.string,
     }),
   }).isRequired,
+  productsQuantity: PropTypes.number.isRequired,
+  retrieveQuantity: PropTypes.func.isRequired,
 };
 
 export default DetailProduct;

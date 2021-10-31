@@ -15,7 +15,6 @@ export const getProductsCart = () => {
 };
 
 export const addProduct = (product) => {
-  console.log(product.id);
   if (product) {
     const productsCart = readProductsCart();
     if (!productsCart.some((actualProduct) => actualProduct.id === product.id)) {
@@ -38,4 +37,10 @@ export const changeQuantity = (product, counter) => {
     savedProduct.quantity += counter;
     saveProductsCart([...productsCart]);
   }
+};
+
+export const getProductsQuantity = () => {
+  const productsCart = readProductsCart();
+  const productsQuantity = productsCart.reduce((acc, cur) => acc + cur.quantity, 0);
+  return productsQuantity;
 };
