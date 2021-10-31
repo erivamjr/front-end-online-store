@@ -7,7 +7,11 @@ class LinkToCart extends Component {
     const { productsQuantity } = this.props;
     return (
       <Link data-testid="shopping-cart-button" to="/cart">
-        <button type="button">Carrinho de Compras</button>
+        <button
+          type="button"
+        >
+          <i className="fas fa-shopping-cart" />
+        </button>
         <span data-testid="shopping-cart-size">
           { productsQuantity }
         </span>
