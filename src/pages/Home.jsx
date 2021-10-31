@@ -1,17 +1,19 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { addProduct } from '../libs/localStorageCart';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
-import ProductCard from '../components/ProductCard';
 import LinkToCart from '../components/LinkToCart';
+// import getHdImage from '../libs/hdImage';
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
       categories: [],
+      categoryID: '',
       searchTerm: '',
       searchedItems: [],
-      categoryID: '',
     };
     this.fetchCategories = this.fetchCategories.bind(this);
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
@@ -51,66 +53,108 @@ class Home extends Component {
 
   render() {
     const { categories, searchedItems } = this.state;
-    const { retrieveQuantity, productsQuantity } = this.props;
+    const { productsQuantity, retrieveQuantity } = this.props;
     return (
-      <div>
-        <div>
-          <ul>
-            {categories.map(({ id, name }) => (
-              <li key={ id }>
-                <button
-                  data-testid="category"
-                  type="button"
-                  value={ id }
-                  onClick={ this.onCategoryClick }
-                >
-                  { name }
-                </button>
-              </li>
-            ))}
-          </ul>
+      <div className="main-container">
+        <div className="categories-list">
+          {categories.map(({ id, name }) => (
+            <button
+              key={ id }
+              data-testid="category"
+              type="button"
+              value={ id }
+              onClick={ this.onCategoryClick }
+            >
+              { name }
+            </button>
+          ))}
         </div>
 
-        <section>
+        <section className="search-container">
           <h2 data-testid="home-initial-message">
             Digite algum termo de pesquisa ou escolha uma categoria.
           </h2>
 
-          <div>
-            <label htmlFor="busca">
+          <div className="search-and-cart">
+            <div className="search-bar">
               <input
-                name="busca"
-                type="text"
-                id="busca"
-                placeholder="Buscar"
-                onChange={ this.inputChangeHandler }
                 data-testid="query-input"
+                type="text"
+                placeholder="Busque aqui seu produto"
+                onChange={ this.inputChangeHandler }
               />
-            </label>
-            <button
-              data-testid="query-button"
-              type="button"
-              onClick={ this.onSubmitHandler }
-            >
-              Buscar
-            </button>
+
+              <button
+                data-testid="query-button"
+                type="button"
+                onClick={ this.onSubmitHandler }
+              >
+                Buscar
+              </button>
+            </div>
+
             <LinkToCart productsQuantity={ productsQuantity } />
           </div>
 
-          <div>
+          <div className="products-container">
             {
               (searchedItems.length > 0)
                 ? searchedItems
-                  .map((item) => (
-                    <div key={ item.id }>
-                      <ProductCard
-                        product={ item }
-                        retrieveQuantity={ retrieveQuantity }
-                      />
-                      {
-                        (item.shipping.free_shipping)
-                        && <p data-testid="free-shipping">Frete Grátis</p>
-                      }
+                  .map((
+                    {
+                      id,
+                      price,
+                      thumbnail,
+                      title,
+                      shipping: { free_shipping: freeShipping },
+                    },
+                  ) => (
+                    <div
+                      key={ `home-${id}` }
+                      className="product-card"
+                    >
+                      <Link
+                        to={ `product/${id}` }
+                        data-testid="product-detail-link"
+                      >
+                        <div data-testid="product">
+                          {
+                            (freeShipping)
+                            && <p data-testid="free-shipping">Frete Grátis</p>
+                          }
+
+                          {/* <img
+                            src={ getHdImage(thumbnail) }
+                            alt={ title }
+                          /> */}
+
+                          <img
+                            src={ thumbnail }
+                            alt={ title }
+                            className="img-for-test"
+                          />
+
+                          <div>
+                            <span>R$ </span>
+                            <span>{ price }</span>
+                          </div>
+
+                          <h4 data-testid="shopping-cart-product-name">
+                            { title }
+                          </h4>
+                        </div>
+                      </Link>
+
+                      <button
+                        data-testid="product-add-to-cart"
+                        type="button"
+                        onClick={ () => {
+                          addProduct({ freeShipping, id, price, thumbnail, title });
+                          retrieveQuantity();
+                        } }
+                      >
+                        Add Cart
+                      </button>
                     </div>
                   )) : <p>Nenhum produto foi encontrado</p>
             }
@@ -125,4 +169,5 @@ Home.propTypes = {
   productsQuantity: PropTypes.number.isRequired,
   retrieveQuantity: PropTypes.func.isRequired,
 };
+
 export default Home;

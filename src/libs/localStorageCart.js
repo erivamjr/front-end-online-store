@@ -29,10 +29,10 @@ export const addProduct = (product) => {
   }
 };
 
-export const changeQuantity = (product, counter) => {
+export const changeQuantity = (productId, counter) => {
   const productsCart = readProductsCart();
   const savedProduct = productsCart
-    .find((actualProduct) => actualProduct.id === product.id);
+    .find((actualProduct) => actualProduct.id === productId);
   if (savedProduct.quantity >= 1) {
     savedProduct.quantity += counter;
     saveProductsCart([...productsCart]);
