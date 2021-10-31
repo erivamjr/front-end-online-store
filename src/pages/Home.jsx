@@ -105,8 +105,9 @@ class Home extends Component {
                       id,
                       price,
                       thumbnail,
-                      title, shipping: { free_shipping: freeShipping }
-                    }) => (
+                      title, shipping: { free_shipping: freeShipping },
+                    },
+                  ) => (
                     <div
                       key={ `home-${id}` }
                       className="product-card"
