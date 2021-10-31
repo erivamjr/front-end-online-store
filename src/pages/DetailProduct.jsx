@@ -48,7 +48,7 @@ class DetailProduct extends Component {
 
   render() {
     const { attributes, freeShipping, id, price, thumbnail, title } = this.state;
-    const { retrieveQuantity, productsQuantity } = this.props;
+    const { productsQuantity, retrieveQuantity } = this.props;
 
     return (
       <div>
@@ -68,7 +68,7 @@ class DetailProduct extends Component {
           type="button"
           data-testid="product-detail-add-to-cart"
           onClick={ () => {
-            addProduct({ price, thumbnail, title, id });
+            addProduct({ freeShipping, id, price, thumbnail, title });
             retrieveQuantity();
           } }
         >

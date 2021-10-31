@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import ProductCard from '../components/ProductCard';
 import { getProductsCart, changeQuantity } from '../libs/localStorageCart';
 
 class Cart extends Component {
@@ -21,6 +20,7 @@ class Cart extends Component {
     this.setState({
       products,
     });
+    console.log(products);
   }
 
   render() {
@@ -31,30 +31,60 @@ class Cart extends Component {
       <div>
         {
           products.length
-            ? products.map((product) => (
+            ? products.map(({ freeShipping, id, price, quantity, thumbnail, title }) => (
               <div
-                key={ `cart${product.id}` }
+                key={ `cart${id}` }
               >
-                <ProductCard
-                  product={ product }
-                />
+                <Link
+                  to={ `product/${id}` }
+                  data-testid="product-detail-link"
+                >
+                  <div data-testid="product">
+
+                    {
+                      (freeShipping)
+                            && <p data-testid="free-shipping">Frete Grátis</p>
+                    }
+
+                    {/* <img
+                            src={ getHdImage(thumbnail) }
+                            alt={ title }
+                          /> */}
+
+                    <img
+                      src={ thumbnail }
+                      alt={ title }
+                      className="img-for-test"
+                    />
+
+                    <div>
+                      <span>R$ </span>
+                      <span>{ price }</span>
+                    </div>
+
+                    <h4 data-testid="shopping-cart-product-name">
+                      { title }
+                    </h4>
+                  </div>
+                </Link>
+
                 <div className="product-quantity">
                   <button
                     type="button"
                     data-testid="product-decrease-quantity"
                     onClick={ () => {
-                      changeQuantity(product, DEACREASE);
+                      changeQuantity(id, DEACREASE);
                       this.retrieveProducts();
                     } }
                   >
                     -
                   </button>
-                  <p data-testid="shopping-cart-product-quantity">{product.quantity}</p>
+                  <p data-testid="shopping-cart-product-quantity">{ quantity }</p>
                   <button
                     type="button"
                     data-testid="product-increase-quantity"
                     onClick={ () => {
-                      changeQuantity(product, INCREASE);
+                      changeQuantity(id, INCREASE);
                       this.retrieveProducts();
                     } }
                   >
