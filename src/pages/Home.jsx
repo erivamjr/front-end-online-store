@@ -100,7 +100,13 @@ class Home extends Component {
             {
               (searchedItems.length > 0)
                 ? searchedItems
-                  .map(({ id, price, thumbnail, title, shipping: { free_shipping: freeShipping } }) => (
+                  .map((
+                    {
+                      id,
+                      price,
+                      thumbnail,
+                      title, shipping: { free_shipping: freeShipping }
+                    }) => (
                     <div
                       key={ `home-${id}` }
                       className="product-card"
