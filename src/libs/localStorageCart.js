@@ -39,11 +39,8 @@ export const changeQuantity = (product, counter) => {
   }
 };
 
-export const getQuantity = () => {
+export const getProductsQuantity = () => {
   const productsCart = readProductsCart();
-  const productsQuantity = productsCart.reduce((acc, cur) => {
-    console.log(acc, cur.quantity);
-    return acc + cur.quantity;
-  }, 0);
+  const productsQuantity = productsCart.reduce((acc, cur) => acc + cur.quantity, 0);
   return productsQuantity;
 };

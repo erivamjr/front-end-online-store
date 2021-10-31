@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { getQuantity } from './libs/localStorageCart';
+import { getProductsQuantity } from './libs/localStorageCart';
 import './App.css';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
@@ -22,7 +22,7 @@ class App extends Component {
   }
 
   retrieveQuantity() {
-    const productsQuantity = getQuantity();
+    const productsQuantity = getProductsQuantity();
     this.setState({ productsQuantity });
   }
 
