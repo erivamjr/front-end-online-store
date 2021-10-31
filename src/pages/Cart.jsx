@@ -20,7 +20,6 @@ class Cart extends Component {
     this.setState({
       products,
     });
-    console.log(products);
   }
 
   render() {
@@ -31,7 +30,16 @@ class Cart extends Component {
       <div>
         {
           products.length
-            ? products.map(({ freeShipping, id, price, quantity, thumbnail, title }) => (
+            ? products.map(({
+              freeShipping,
+              id,
+              price,
+              quantity,
+              thumbnail,
+              title,
+              available_quantity: avaiableQuantity,
+              maxQuantity,
+            }) => (
               <div
                 key={ `cart${id}` }
               >
@@ -56,6 +64,11 @@ class Cart extends Component {
                       alt={ title }
                       className="img-for-test"
                     />
+                    <div>
+                      <span>
+                        {`Unidades disponíveis: ${avaiableQuantity}`}
+                      </span>
+                    </div>
 
                     <div>
                       <span>R$ </span>
@@ -80,16 +93,35 @@ class Cart extends Component {
                     -
                   </button>
                   <p data-testid="shopping-cart-product-quantity">{ quantity }</p>
-                  <button
-                    type="button"
-                    data-testid="product-increase-quantity"
-                    onClick={ () => {
-                      changeQuantity(id, INCREASE);
-                      this.retrieveProducts();
-                    } }
-                  >
-                    +
-                  </button>
+                  {
+                    (quantity <= maxQuantity)
+                      ? (
+                        <button
+                          type="button"
+                          data-testid="product-increase-quantity"
+                          onClick={ () => {
+                            changeQuantity(id, INCREASE);
+                            this.retrieveProducts();
+                          } }
+                        >
+                          +
+                        </button>
+                      )
+                      : (
+                        <button
+                          type="button"
+                          data-testid="product-increase-quantity"
+                          onClick={ () => {
+                            changeQuantity(id, INCREASE);
+                            this.retrieveProducts();
+                          } }
+                          disabled
+                        >
+                          +
+                        </button>
+                      )
+                  }
+
                 </div>
                 <button type="button">Excluir</button>
               </div>

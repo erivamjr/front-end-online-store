@@ -13,6 +13,7 @@ class DetailProduct extends Component {
       price: '',
       thumbnail: '',
       title: '',
+      availableQuantity: '',
     };
     this.fetchAndSaveProduct = this.fetchAndSaveProduct.bind(this);
     this.fetchProductById = this.fetchProductById.bind(this);
@@ -41,19 +42,39 @@ class DetailProduct extends Component {
       price,
       thumbnail,
       title,
+      available_quantity: availableQuantity,
     } = product;
 
-    this.setState({ attributes, freeShipping, id, price, thumbnail, title });
+    this.setState({
+      attributes,
+      freeShipping,
+      id,
+      price,
+      thumbnail,
+      title,
+      availableQuantity,
+    });
   }
 
   render() {
-    const { attributes, freeShipping, id, price, thumbnail, title } = this.state;
+    const {
+      attributes,
+      freeShipping,
+      id,
+      price,
+      thumbnail,
+      title,
+      availableQuantity,
+    } = this.state;
     const { productsQuantity, retrieveQuantity } = this.props;
 
     return (
       <div>
         <h2 data-testid="product-detail-name">{title}</h2>
         <p>{price}</p>
+        <span>
+          {`Unidades disponíveis: ${availableQuantity}`}
+        </span>
         <img src={ thumbnail } alt={ title } />
         {attributes.map(({ name, value_name: valueName, id: atributeID }) => (
           <div key={ atributeID }>
