@@ -14,7 +14,7 @@ class ProductCard extends Component {
   }
 
   render() {
-    const { product: { price, thumbnail, title, id } } = this.props;
+    const { product: { price, thumbnail, title, id }, retrieveQuantity } = this.props;
     return (
       <div>
         <Link
@@ -30,8 +30,11 @@ class ProductCard extends Component {
         <button
           data-testid="product-add-to-cart"
           type="button"
-          onClick={ () => this
-            .fetchProductAndSave({ price, thumbnail, title, id }) }
+          onClick={ () => {
+            this
+              .fetchProductAndSave({ price, thumbnail, title, id });
+            retrieveQuantity();
+          } }
         >
           Add Cart
         </button>
@@ -47,6 +50,7 @@ ProductCard.propTypes = {
     thumbnail: PropTypes.string,
     title: PropTypes.string,
   }).isRequired,
+  retrieveQuantity: PropTypes.func.isRequired,
 };
 
 export default ProductCard;
