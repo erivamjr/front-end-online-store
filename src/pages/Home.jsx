@@ -68,10 +68,12 @@ class Home extends Component {
             ))}
           </ul>
         </div>
-        <div>
+
+        <section>
           <h2 data-testid="home-initial-message">
             Digite algum termo de pesquisa ou escolha uma categoria.
           </h2>
+
           <div>
             <label htmlFor="busca">
               <input
@@ -90,25 +92,32 @@ class Home extends Component {
             >
               Buscar
             </button>
+
             <Link data-testid="shopping-cart-button" to="/cart">
               <button type="button">
                 Carrinho de Compras
               </button>
             </Link>
           </div>
+
           <div>
             {
               (searchedItems.length > 0)
                 ? searchedItems
                   .map((item) => (
-                    <ProductCard
-                      key={ item.id }
-                      product={ item }
-                    />
+                    <div key={ item.id }>
+                      <ProductCard
+                        product={ item }
+                      />
+                      {
+                        (item.shipping.free_shipping)
+                        && <p data-testid="free-shipping">Frete Grátis</p>
+                      }
+                    </div>
                   )) : <p>Nenhum produto foi encontrado</p>
             }
           </div>
-        </div>
+        </section>
       </div>
     );
   }

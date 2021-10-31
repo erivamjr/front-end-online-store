@@ -7,16 +7,15 @@ class DetailProduct extends Component {
   constructor() {
     super();
     this.state = {
-      title: '',
-      thumbnail: '',
-      price: '',
       attributes: [],
+      freeShipping: false,
       id: '',
+      price: '',
+      thumbnail: '',
+      title: '',
     };
-
     this.fetchAndSaveProduct = this.fetchAndSaveProduct.bind(this);
     this.fetchProductById = this.fetchProductById.bind(this);
-    this.fetchProductAndSave = this.fetchProductAndSave.bind(this);
   }
 
   componentDidMount() {
@@ -35,17 +34,20 @@ class DetailProduct extends Component {
     } = this.props;
 
     const product = await this.fetchProductById(productId);
-    const { title, price, thumbnail, attributes, id } = product;
+    const {
+      attributes,
+      shipping: { free_shipping: freeShipping },
+      id,
+      price,
+      thumbnail,
+      title,
+    } = product;
 
-    this.setState({ title, price, thumbnail, attributes, id });
-  }
-
-  async fetchProductAndSave(product) {
-    addProduct(product);
+    this.setState({ attributes, freeShipping, id, price, thumbnail, title });
   }
 
   render() {
-    const { title, price, thumbnail, attributes, id } = this.state;
+    const { attributes, freeShipping, id, price, thumbnail, title } = this.state;
     return (
       <div>
         <h2 data-testid="product-detail-name">{title}</h2>
@@ -56,11 +58,14 @@ class DetailProduct extends Component {
             <h3>{`${name}: ${valueName}`}</h3>
           </div>
         ))}
+        {
+          (freeShipping)
+          && <p data-testid="free-shipping">Frete Grátis</p>
+        }
         <button
           type="button"
           data-testid="product-detail-add-to-cart"
-          onClick={ () => this
-            .fetchProductAndSave({ price, thumbnail, title, id }) }
+          onClick={ () => addProduct({ price, thumbnail, title, id }) }
         >
           Adicionar ao Carrinho
         </button>
